@@ -1,0 +1,29 @@
+{
+  "name": "test-update-electron",
+  "version": "1.0.0",
+  "description": "Check for update and deploy",
+  "main": "index.js",
+  "scripts": {
+    "publish": "build -p always",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.8.4",
+    "electron-builder": "^20.10.0"
+  },
+  "dependencies": {
+    "electron-log": "^2.2.14",
+    "electron-updater": "^2.21.8"
+  },
+  "build": {
+    "appId" : "com.test.electron",
+    "publish": [{
+        "provider": "github",
+        "owner": "bhaveshkwatra",
+        "repo": "test-update"
+    }]
+}
+}
