@@ -1,6 +1,6 @@
 {
   "name": "test-update-electron",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Check for update and deploy",
   "main": "index.js",
   "scripts": {
