@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
+const {app, BrowserWindow, Menu, protocol, ipcMain, dialog} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 autoUpdater.logger = log;
@@ -12,8 +12,10 @@ if (process.platform === 'win32') {
     label: name,
     submenu: [
       {
-        label: 'About ' + name,
-        role: 'about'
+        label: 'Check For Update',
+        click(){
+          autoUpdater.checkForUpdates();
+        }
       },
       {
         label: 'Quit',
@@ -51,14 +53,25 @@ autoUpdater.on('update-not-available', (info) => {
 autoUpdater.on('error', (err) => {
   sendStatusToWindow('Error in auto-updater. ' + err);
 })
-autoUpdater.on('download-progress', (progressObj) => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-  sendStatusToWindow(log_message);
-})
+// autoUpdater.on('download-progress', (progressObj) => {
+//   let log_message = "Download speed: " + progressObj.bytesPerSecond;
+//   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+//   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+//   sendStatusToWindow(log_message);
+// })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
+  dialog.showMessageBox({
+    type: 'question',
+    buttons: ['Install and Relaunch', 'Later'],
+    defaultId: 0,
+    message: 'A new version of ' + app.getName() + ' has been downloaded',
+    detail: message
+  }, response => {
+    if (response === 0) {
+      setTimeout(() => autoUpdater.quitAndInstall(), 1);
+    }
+  });
 });
 app.on('ready', function() {
   // Create the Menu
@@ -70,7 +83,3 @@ app.on('ready', function() {
 app.on('window-all-closed', () => {
   app.quit();
 });
-
-app.on('ready', function()  {
-    autoUpdater.checkForUpdatesAndNotify();
-  })
