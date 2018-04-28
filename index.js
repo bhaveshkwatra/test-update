@@ -5,7 +5,7 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 let template = []
-if (process.platform === 'darwin') {
+if (process.platform === 'win32') {
   // OS X
   const name = app.getName();
   template.unshift({
