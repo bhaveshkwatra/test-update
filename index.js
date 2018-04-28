@@ -61,6 +61,7 @@ autoUpdater.on('error', (err) => {
 // })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
+  let message = app.getName() + ' ' + releaseName + ' is now available. It will be installed the next time you restart the application.';
   dialog.showMessageBox({
     type: 'question',
     buttons: ['Install and Relaunch', 'Later'],
