@@ -45,6 +45,19 @@ autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...');
 })
 autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update downloaded');
+  let message = app.getName() +  ' is now available. It will be installed the next time you restart the application.';
+    dialog.showMessageBox({
+    type: 'question',
+    buttons: ['Install and Relaunch', 'Later'],
+    defaultId: 0,
+    message: 'A new version of ' + app.getName() + ' has been downloaded',
+    detail: message
+  }, response => {
+    if (response === 0) {
+      setTimeout(() => autoUpdater.quitAndInstall(true,true), 1);
+    }
+  });
   sendStatusToWindow('Update available.');
 })
 autoUpdater.on('update-not-available', (info) => {
