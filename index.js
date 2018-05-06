@@ -55,7 +55,7 @@ autoUpdater.on('update-available', (info) => {
     detail: message
   }, response => {
     if (response === 0) {
-      setTimeout(() => {
+      
         autoUpdater.on('download-progress', (progressObj) => {
           let log_message = "Download speed: " + progressObj.bytesPerSecond;
           log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
@@ -66,7 +66,7 @@ autoUpdater.on('update-available', (info) => {
           sendStatusToWindow('Update downloaded');
           autoUpdater.quitAndInstall(); 
         });
-      }, 1);
+      
     }
   });
 })
