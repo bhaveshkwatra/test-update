@@ -74,24 +74,13 @@ autoUpdater.on('download-progress', (progressObj) => {
 })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
-  // let message = app.getName() +  ' is now available. It will be installed the next time you restart the application.';
-  // dialog.showMessageBox({
-  //   type: 'question',
-  //   buttons: ['Install and Relaunch', 'Later'],
-  //   defaultId: 0,
-  //   message: 'A new version of ' + app.getName() + ' has been downloaded',
-  //   detail: message
-  // }, response => {
-  //   if (response === 0) {
-  //     setTimeout(() => autoUpdater.quitAndInstall(), 1);
-  //   }
-  // });
+  autoUpdater.quitAndInstall(); 
 });
 app.on('ready', function() {
   // Create the Menu
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
-  autoUpdater.checkForUpdatesAndNotify();
+ // autoUpdater.checkForUpdatesAndNotify();
   createDefaultWindow();
 });
 app.on('window-all-closed', () => {
